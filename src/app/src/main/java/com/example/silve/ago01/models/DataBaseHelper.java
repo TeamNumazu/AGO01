@@ -30,8 +30,10 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     private final File mDatabasePath;
 
     public DataBaseHelper(Context context) {
+
         super(context, DB_NAME, null, DATABASE_VERSION);
         mContext = context;
+        mDbHelper = new DataBaseHelper(mContext);
         mDatabasePath = mContext.getDatabasePath(DB_NAME);
     }
 
@@ -134,7 +136,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        mDbHelper = new DataBaseHelper(getContext());
     }
 
     @Override
