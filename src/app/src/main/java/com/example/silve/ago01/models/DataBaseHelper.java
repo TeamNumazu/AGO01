@@ -1,5 +1,6 @@
 package com.example.silve.ago01.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,134 +13,113 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.example.silve.ago01.models.AgoContract;
+
 /**
  * データベースを作成する
  * アプリ開始時に使用するテーブルとデータを挿入するクラスです
  */
+public class DataBaseHelper extends SQLiteOpenHelper {
 
-public class DataBaseHelper extends SQLiteOpenHelper{
+    //sqlite text型です
+    private static final String TEXT_TYPE = " TEXT";
+
+    //sqlite BLOB型です
+    private static final String BLOB_TYPE = " BLOB";
+
+    //sqlite INTEGER型です
+    private static final String INTEGER_TYPE = " INTEGER";
 
 
-    private static String DB_NAME = "ago";
-    private static String DB_NAME_ASSET = "ago.db";
+    //カンマ
+    private static final String COMMA_SEP = ",";
+
+    //カテゴリータグのDDL文
+    private static final String SQL_CREATE_CATEGORY =
+            "CREATE TABLE " + AgoContract.Category.TABLE_NAME + " (" +
+                    AgoContract.Category._ID + " INTEGER PRIMARY KEY," +
+                    AgoContract.Category.COLUMN_NAME_CATEGORYNAME + TEXT_TYPE +
+                    " )";
+
+    //商品のDDL文
+    private static final String SQL_CREATE_ITEM =
+            "CREATE TABLE " + AgoContract.Item.TABLE_NAME + " (" +
+                    AgoContract.Item._ID + " INTEGER PRIMARY KEY," +
+                    AgoContract.Item.COLUMN_NAME_CATEGORYID + INTEGER_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_ITEMNAME + TEXT_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_EXPIRED_AT + TEXT_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_UPDATED_AT + TEXT_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_CREATED_AT + TEXT_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_IS_BUY + TEXT_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_ITEMIMAGE + BLOB_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_NUMBER + INTEGER_TYPE +
+                    " )";
+
+    private static final String SQL_DELETE_CATEGORY =
+            "DROP TABLE IF EXISTS " + AgoContract.Category.TABLE_NAME;
+
+
+    private static final String SQL_DELETE_ITEM =
+            "DROP TABLE IF EXISTS " + AgoContract.Item.TABLE_NAME;
+
+    private static String DB_NAME = "ago.db";
     private static final int DATABASE_VERSION = 17;
-    private DataBaseHelper mDbHelper;
 
 
-    private final Context mContext;
-    private final File mDatabasePath;
-
+    /**
+     * @param context
+     */
     public DataBaseHelper(Context context) {
 
         super(context, DB_NAME, null, DATABASE_VERSION);
-        mContext = context;
-        mDbHelper = new DataBaseHelper(mContext);
-        mDatabasePath = mContext.getDatabasePath(DB_NAME);
     }
 
     /**
-     * asset に格納したデータベースをコピーするための空のデータベースを作成する
-     */
-    public void createEmptyDataBase() throws IOException {
-        boolean dbExist = checkDataBaseExists();
-
-        if (dbExist) {
-            // すでにデータベースは作成されている
-        } else {
-            // このメソッドを呼ぶことで、空のデータベースがアプリのデフォルトシステムパスに作られる
-            getReadableDatabase();
-
-            try {
-                // asset に格納したデータベースをコピーする
-                copyDataBaseFromAsset();
-
-                String dbPath = mDatabasePath.getAbsolutePath();
-                SQLiteDatabase checkDb = null;
-                try {
-                    checkDb = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
-                } catch (SQLiteException e) {
-                }
-
-                if (checkDb != null) {
-                    checkDb.setVersion(DATABASE_VERSION);
-                    checkDb.close();
-                }
-
-            } catch (IOException e) {
-                throw new Error("Error copying database");
-            }
-        }
-    }
-
-    /**
-     * 再コピーを防止するために、すでにデータベースがあるかどうか判定する
+     * データベースが作成されていないときに呼ばれる初期化処理
+     * ここではテーブル作成と初期のデータ登録をおこなっています
      *
-     * @return 存在している場合 {@code true}
+     * @param db
      */
-    private boolean checkDataBaseExists() {
-        String dbPath = mDatabasePath.getAbsolutePath();
-
-        SQLiteDatabase checkDb = null;
-        try {
-            checkDb = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
-        } catch (SQLiteException e) {
-            // データベースはまだ存在していない
-        }
-
-        if (checkDb == null) {
-            // データベースはまだ存在していない
-            return false;
-        }
-
-        int oldVersion = checkDb.getVersion();
-        int newVersion = DATABASE_VERSION;
-
-        if (oldVersion == newVersion) {
-            // データベースは存在していて最新
-            checkDb.close();
-            return true;
-        }
-
-        // データベースが存在していて最新ではないので削除
-        File f = new File(dbPath);
-        f.delete();
-        return false;
-    }
-
-    /**
-     * asset に格納したデーだベースをデフォルトのデータベースパスに作成したからのデータベースにコピーする
-     */
-    private void copyDataBaseFromAsset() throws IOException{
-
-        // asset 内のデータベースファイルにアクセス
-        InputStream mInput = mContext.getAssets().open(DB_NAME_ASSET);
-
-        // デフォルトのデータベースパスに作成した空のDB
-        OutputStream mOutput = new FileOutputStream(mDatabasePath);
-
-        // コピー
-        byte[] buffer = new byte[1024];
-        int size;
-        while ((size = mInput.read(buffer)) > 0) {
-            mOutput.write(buffer, 0, size);
-        }
-
-        // Close the streams
-        mOutput.flush();
-        mOutput.close();
-        mInput.close();
-    }
-
-    public SQLiteDatabase openDataBase() throws SQLException {
-        return getReadableDatabase();
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //必要テーブルのDDL実行
+        db.execSQL(SQL_CREATE_CATEGORY);
+        db.execSQL(SQL_CREATE_ITEM);
+
+        //初期データ投入
+        //初期カテゴリタグを追加
+        String[] categoryNames = {"冷蔵庫", "冷凍庫", "調味料", "台所"};
+        db.beginTransaction();
+        try {
+
+            for (String categoryName : categoryNames) {
+                ContentValues values = new ContentValues();
+                values.put(AgoContract.Category.COLUMN_NAME_CATEGORYNAME, categoryName);
+                db.insert(AgoContract.Category.TABLE_NAME, null, values);
+
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            db.endTransaction();
+            throw e;
+        }
+        db.endTransaction();
     }
 
+    /**
+     * データベースをアップデートする必要があるときに使うらしい
+     * テーブル定義の変更等があれば適宜修正する必要があります。
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(SQL_DELETE_CATEGORY);
+        db.execSQL(SQL_DELETE_ITEM);
+        onCreate(db);
     }
 
 }

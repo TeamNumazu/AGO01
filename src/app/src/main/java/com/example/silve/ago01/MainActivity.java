@@ -1,5 +1,6 @@
 package com.example.silve.ago01;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.silve.ago01.models.AgoContract;
+import com.example.silve.ago01.models.DataBaseHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +63,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        DataBaseHelper mDbHelper  = new DataBaseHelper(this);
+        SQLiteDatabase db =  mDbHelper.getReadableDatabase();
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
