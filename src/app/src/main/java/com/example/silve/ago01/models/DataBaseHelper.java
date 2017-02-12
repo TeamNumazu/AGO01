@@ -24,9 +24,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //sqlite text型です
     private static final String TEXT_TYPE = " TEXT";
 
-    //sqlite BLOB型です
-    private static final String BLOB_TYPE = " BLOB";
-
     //sqlite INTEGER型です
     private static final String INTEGER_TYPE = " INTEGER";
 
@@ -51,7 +48,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     AgoContract.Item.COLUMN_NAME_UPDATED_AT + TEXT_TYPE + COMMA_SEP +
                     AgoContract.Item.COLUMN_NAME_CREATED_AT + TEXT_TYPE + COMMA_SEP +
                     AgoContract.Item.COLUMN_NAME_IS_BUY + TEXT_TYPE + COMMA_SEP +
-                    AgoContract.Item.COLUMN_NAME_ITEMIMAGE + BLOB_TYPE + COMMA_SEP +
+                    AgoContract.Item.COLUMN_NAME_ITEMIMAGE + TEXT_TYPE + COMMA_SEP +
                     AgoContract.Item.COLUMN_NAME_NUMBER + INTEGER_TYPE +
                     " )";
 
