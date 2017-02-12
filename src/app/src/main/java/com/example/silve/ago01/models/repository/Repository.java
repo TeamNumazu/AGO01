@@ -1,7 +1,7 @@
 package com.example.silve.ago01.models.repository;
 
 
-import com.example.silve.ago01.models.specification.Specification;
+import com.example.silve.ago01.models.specification.sql.Specification;
 
 import java.util.List;
 

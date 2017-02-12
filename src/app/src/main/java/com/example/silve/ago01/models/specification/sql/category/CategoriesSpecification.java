@@ -1,6 +1,6 @@
-package com.example.silve.ago01.models.specification.category;
+package com.example.silve.ago01.models.specification.sql.category;
 
-import com.example.silve.ago01.models.specification.SqlSpecification;
+import com.example.silve.ago01.models.specification.sql.SqlSpecification;
 
 import com.example.silve.ago01.models.AgoContract;
 
