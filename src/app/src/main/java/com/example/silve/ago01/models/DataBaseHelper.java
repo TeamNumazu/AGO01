@@ -85,7 +85,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //初期データ投入
         //初期カテゴリタグを追加
-        String[] categoryNames = {"冷蔵庫", "冷凍庫", "調味料", "台所"};
+        String[] categoryNames = {"冷蔵庫", "冷凍庫", "調味料", "台所","ペット","非常食"};
         db.beginTransaction();
         try {
 
