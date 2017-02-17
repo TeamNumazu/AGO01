@@ -18,6 +18,11 @@ import android.widget.ListView;
 import android.support.design.widget.TabLayout;
 import com.example.silve.ago01.models.AgoContract;
 import com.example.silve.ago01.models.DataBaseHelper;
+import com.example.silve.ago01.models.entity.Category;
+import com.example.silve.ago01.models.repository.CategoryRepository;
+import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,11 +47,17 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout)  findViewById(R.id.tabs);
 
+        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        CategoryRepository cRepository = new CategoryRepository(dbHelper);
+
+        CategoriesSpecification cAllSpec = new CategoriesSpecification();
+
+        List<Category> categories =  cRepository.query(cAllSpec);
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        for(Category category :categories){
+            tabLayout.addTab(tabLayout.newTab().setText(category.getCategoryName()));
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
