@@ -1,5 +1,6 @@
 package com.example.silve.ago01;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.design.widget.TabLayout;
+
+import com.example.silve.ago01.activity.SwipeActivity;
 import com.example.silve.ago01.models.AgoContract;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
@@ -140,5 +143,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void agostickDisplay(View view)
+    {
+        Intent intent = new Intent(this, SwipeActivity.class);
+        startActivity(intent);
     }
 }
