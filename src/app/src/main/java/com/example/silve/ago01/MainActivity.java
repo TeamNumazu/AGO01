@@ -1,5 +1,6 @@
 package com.example.silve.ago01;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,7 @@ import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.repository.CategoryRepository;
 import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
-
+import com.example.silve.ago01.activity.ItemRegisterActivity;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -61,15 +62,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -140,5 +132,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void changeItemRegisterDisplay(View view){
+        Intent intent = new Intent(this, ItemRegisterActivity.class);
+        startActivity(intent);
+
     }
 }
