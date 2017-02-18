@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".activity.ItemRegisterActivity"
-            android:label="@string/title_activity_item_register"
+            android:label="登録"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
