@@ -1,7 +1,7 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
+/.idea
 /.idea/libraries
 .DS_Store
 /build
@@ -62,4 +62,4 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
-Contact GitHub 
+Contact GitHub
