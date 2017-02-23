@@ -19,8 +19,10 @@ public class FindByCategorySpecification implements SqlSpecification {
     public String toSqlQuery() {
 
         return String.format("SELECT * FROM ITEM WHERE %1$S WHERE " +
-                AgoContract.Item.COLUMN_NAME_CATEGORYID + "= %2$S",
-                AgoContract.Item.TABLE_NAME
+                        AgoContract.Item.COLUMN_NAME_CATEGORYID + "= %2$S",
+                AgoContract.Item.TABLE_NAME,
+                categoryId
         );
+
     }
 }
