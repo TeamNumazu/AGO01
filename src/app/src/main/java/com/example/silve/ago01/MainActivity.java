@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.design.widget.TabLayout;
+
+import com.example.silve.ago01.activity.SwipeActivity;
 import com.example.silve.ago01.models.AgoContract;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
@@ -138,5 +140,11 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, ItemRegisterActivity.class);
         startActivity(intent);
 
+    }
+
+    public void agostickDisplay(View view)
+    {
+        Intent intent = new Intent(this, SwipeActivity.class);
+        startActivity(intent);
     }
 }
