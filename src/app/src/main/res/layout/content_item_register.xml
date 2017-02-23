@@ -54,6 +54,7 @@
         android:ems="10"
         android:layout_below="@+id/editText3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/calender_button" />
 
 </RelativeLayout>
