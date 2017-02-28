@@ -2,7 +2,11 @@ package com.example.silve.ago01.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
+
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.example.silve.ago01.R;
 
 public class SwipeActivity extends AppCompatActivity {
@@ -13,43 +17,47 @@ public class SwipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swipe_view);
 
+        final String[] aqours = {
+                "Chika Takami", "You Watanabe", "Riko Sakurauchi",
+                "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
+                "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"
+        };
+        ArraySwipeAdapter<String> arraySwipeAdapter= new ArraySwipeAdapter<String>(this, R.layout.swipe_view, aqours) {
+            @Override
+            public int getSwipeLayoutResourceId(int position) {
+                return 0;
+            }
+        };
+
         SwipeLayout swipeLayout =  (SwipeLayout)findViewById(R.id.sample1);
-
-//set show mode.
         swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, findViewById(R.id.bottom_wrapper_2));
 
-//add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
-        swipeLayout.addDrag(SwipeLayout.DragEdge.Left, findViewById(R.id.bottom_wrapper));
-
-        swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+        swipeLayout.findViewById(R.id.star2).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClose(SwipeLayout layout) {
-                //when the SurfaceView totally cover the BottomView.
+            public void onClick(View v) {
+                Toast.makeText(SwipeActivity.this, "Star", Toast.LENGTH_SHORT).show();
             }
+        });
 
+        swipeLayout.findViewById(R.id.trash2).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-                //you are swiping.
+            public void onClick(View v) {
+                Toast.makeText(SwipeActivity.this, "Trash Bin", Toast.LENGTH_SHORT).show();
             }
+        });
 
+        swipeLayout.findViewById(R.id.magnifier2).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartOpen(SwipeLayout layout) {
-
+            public void onClick(View v) {
+                Toast.makeText(SwipeActivity.this, "Magnifier", Toast.LENGTH_SHORT).show();
             }
+        });
 
+        swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onOpen(SwipeLayout layout) {
-                //when the BottomView totally show.
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-                //when user's hand released.
+            public void onClick(View v) {
+                Toast.makeText(SwipeActivity.this, "Click on surface", Toast.LENGTH_SHORT).show();
             }
         });
     }
