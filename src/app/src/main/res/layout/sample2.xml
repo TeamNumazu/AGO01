@@ -1,35 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="80dp" android:id="@+id/swipe_ago">
+    android:layout_width="match_parent" android:layout_height="match_parent">
     <LinearLayout
-        android:tag="Bottom4"
-        android:id="@+id/bottom_wrapper_2"
+        android:tag="Bottom2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-
         <ImageView
-            android:id="@+id/magnifier2"
+            android:id="@+id/magnifier"
             android:src="@drawable/ic_menu_share"
             android:layout_width="70dp"
             android:background="#f7e79c"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:layout_height="match_parent" />
-
         <ImageView
-            android:id="@+id/star2"
+            android:id="@+id/star"
             android:src="@drawable/ic_menu_send"
             android:layout_width="70dp"
             android:background="#4cd964"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:layout_height="match_parent" />
-
         <ImageView
-            android:id="@+id/trash2"
-            android:src="@drawable/ic_menu_gallery"
+            android:id="@+id/trash"
+            android:src="@drawable/ic_menu_manage"
             android:layout_width="70dp"
-            android:background="#d21717"
+            android:background="#aa0139"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:layout_height="match_parent" />
@@ -37,17 +34,20 @@
 
     <LinearLayout
         android:padding="10dp"
-        android:background="#ffffff"
+        android:orientation="vertical"
+        android:background="#f4f4f4"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
-            android:text="Chika Takami"
+            android:tag="Hover"
+            android:text="理解（りかい）されるということは、一種（いっしゅ）の贅沢（ぜいたく）である。"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView2"
-            android:layout_weight="1"
-            android:textSize="18sp" />
+            android:layout_height="wrap_content" />
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/click"
+            android:text="Click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
 </com.daimajia.swipe.SwipeLayout>
