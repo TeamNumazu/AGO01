@@ -18,63 +18,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="商品名"/>
         <EditText
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            />
-
-        <include
-            android:id="@+id/calender_button"
-            layout="@layout/fragment_date_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            android:maxLines="1"
+            android:hint="商品名を入力してください"
             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="賞味期限"/>
         <EditText
             android:id="@+id/expired_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            />
-
-        <include
-            android:id="@+id/calender_button"
-            layout="@layout/fragment_date_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="商品名"/>
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:maxLines="1"
+            android:hint="賞味期限：yyyy/mm/dd"
             />
 
         <include
