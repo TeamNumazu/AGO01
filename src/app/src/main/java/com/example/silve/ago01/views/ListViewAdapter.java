@@ -16,8 +16,11 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
 
-    public ListViewAdapter(Context mContext) {
+    private String[] mAdapterData;
+
+    public ListViewAdapter(Context mContext, String[] adapterData) {
         this.mContext = mContext;
+        this.mAdapterData = adapterData;
     }
 
     @Override
@@ -53,17 +56,21 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public void fillValues(int position, View convertView) {
         TextView t = (TextView)convertView.findViewById(R.id.position);
-        t.setText((position + 1) + ".");
+        t.setText((position + 1) + "." + getItem(position));
     }
 
     @Override
     public int getCount() {
-        return 50;
+        return mAdapterData.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        if (mAdapterData.length > position) {
+            return mAdapterData[position];
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -47,7 +47,7 @@ public class SwipeActivity extends AppCompatActivity {
          */
         mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, adapterData));
 
-        mAdapter = new ListViewAdapter(this);
+        mAdapter = new ListViewAdapter(this, adapterData);
         mListView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
 
