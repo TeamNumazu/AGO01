@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.daimajia.swipe.util.Attributes;
 import com.example.silve.ago01.R;
 import com.example.silve.ago01.views.ArraySwipeAdapterSample;
@@ -25,6 +24,11 @@ public class SwipeActivity extends AppCompatActivity {
     private ListView mListView;
     private com.example.silve.ago01.views.ListViewAdapter mAdapter;
     private Context mContext = this;
+
+    private static final String[] adapterData = new String[]{
+            "Chika Takami", "You Watanabe", "Riko Sakurauchi",
+            "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
+            "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +45,7 @@ public class SwipeActivity extends AppCompatActivity {
         /**
          * The following comment is the sample usage of ArraySwipeAdapter.
          */
-//        String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
-//                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
-//                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
-//                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
-        String[] aqours = new String[]{
-                "Chika Takami", "You Watanabe", "Riko Sakurauchi",
-                "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
-                "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"
-        };
-        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, aqours));
+        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, adapterData));
 
         mAdapter = new ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
