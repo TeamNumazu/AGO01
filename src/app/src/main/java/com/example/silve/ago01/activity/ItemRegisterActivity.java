@@ -21,7 +21,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
     }
-    public void showTimePickerDialog(View v) {
+    public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
