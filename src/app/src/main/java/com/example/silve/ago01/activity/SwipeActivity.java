@@ -25,11 +25,6 @@ public class SwipeActivity extends AppCompatActivity {
     private com.example.silve.ago01.views.ListViewAdapter mAdapter;
     private Context mContext = this;
 
-    private static final String[] adapterData = new String[]{
-            "Chika Takami", "You Watanabe", "Riko Sakurauchi",
-            "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
-            "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +40,11 @@ public class SwipeActivity extends AppCompatActivity {
         /**
          * The following comment is the sample usage of ArraySwipeAdapter.
          */
-        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, adapterData));
-
-        mAdapter = new ListViewAdapter(this, adapterData);
-        mListView.setAdapter(mAdapter);
-        mAdapter.setMode(Attributes.Mode.Single);
+        String[] dataList = new String[]{
+                "Chika Takami", "You Watanabe", "Riko Sakurauchi",
+                "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
+                "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"};
+        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, dataList));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
