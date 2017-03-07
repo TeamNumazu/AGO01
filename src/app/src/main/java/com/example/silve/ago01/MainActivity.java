@@ -25,6 +25,8 @@ import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.repository.CategoryRepository;
 import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
 import com.example.silve.ago01.activity.ItemRegisterActivity;
+import com.example.silve.ago01.services.AgostickNotification;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -120,7 +122,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            // 通知のテスト
+            AgostickNotification notificator = new AgostickNotification(getApplicationContext());
 
+            String message = "輝きたい！";
+            String title = "とぅるるるるるるる";
+
+            notificator.doNotice(message, title);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

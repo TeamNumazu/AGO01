@@ -56,7 +56,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public void fillValues(int position, View convertView) {
         TextView t = (TextView)convertView.findViewById(R.id.position);
-        t.setText((position + 1) + "." + getItem(position));
+        t.setText((position + 1) + ".");
     }
 
     @Override
@@ -66,11 +66,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (mAdapterData.length > position) {
-            return mAdapterData[position];
-        } else {
-            return null;
-        }
+        return null;
     }
 
     @Override
