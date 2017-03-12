@@ -13,32 +13,42 @@
     tools:context="com.example.silve.ago01.activity.ItemRegisterActivity"
     tools:showIn="@layout/activity_item_register"
     android:orientation="vertical"
-    >
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名："/>
         <EditText
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:maxLines="1"
-            android:hint="商品名"
+            android:hint="じゃがりことか..."
             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/picture"
+
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:maxLines="1"
-            android:hint="商品画像"
-            />
+            android:layout_height="match_parent"
+            android:text="商品画像：" />
+
+        <ImageView
+            android:id="@+id/item_view"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="fitCenter" />
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
@@ -52,13 +62,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="賞味期限："/>
         <EditText
             android:id="@+id/expired_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:maxLines="1"
-            android:hint="賞味期限(yyyy/mm/dd)"
+            android:hint="yyyy/mm/dd"
             />
 
         <include
@@ -73,11 +87,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="個数："/>
         <EditText
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:maxLines="1"
             android:inputType="number"
             android:hint="個数"
