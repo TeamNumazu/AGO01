@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.design.widget.TabLayout;
+import android.widget.Toast;
 
 import com.example.silve.ago01.activity.SwipeActivity;
 import com.example.silve.ago01.models.AgoContract;
@@ -26,6 +27,7 @@ import com.example.silve.ago01.models.repository.CategoryRepository;
 import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
 import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.services.AgostickNotification;
+import com.example.silve.ago01.services.ExpireNotifierService;
 
 import java.util.List;
 
@@ -130,9 +132,15 @@ public class MainActivity extends AppCompatActivity
 
             notificator.doNotice(message, title);
         } else if (id == R.id.nav_slideshow) {
-
+            Toast.makeText(this, "サービス(ExpireNotifierService)を開始します", Toast.LENGTH_LONG).show();
+            // Serviceの開始（テスト）
+            Intent intent = new Intent(getApplication(), ExpireNotifierService.class);
+            startService(intent);
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(this, "サービス(ExpireNotifierService)を停止します", Toast.LENGTH_LONG).show();
+            // Serviceの停止（テスト）
+            Intent intent = new Intent(getApplication(), ExpireNotifierService.class);
+            stopService(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
