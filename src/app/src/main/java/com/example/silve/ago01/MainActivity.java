@@ -131,25 +131,13 @@ public class MainActivity extends AppCompatActivity
 
             notificator.doNotice(message, title);
         } else if (id == R.id.nav_slideshow) {
-            // レシーバー登録
-            BroadcastReceiver agostickReceiver = new BroadcastReceiver(){
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Serviceを開始
-                    Intent expireNotifierService = new Intent(getApplication(), ExpireNotifierService.class);
-                    expireNotifierService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startService(expireNotifierService);
-                }
-            };
-
             // BroadcastReceiverを登録する
             Toast.makeText(this, "Receiverを(AgostickReceiver)を登録します", Toast.LENGTH_LONG).show();
-            this.registerReceiver(agostickReceiver, new IntentFilter("android.intent.action.TIME_TICK"));
+            this.registerReceiver(this.getAgostickReceiver(), new IntentFilter("android.intent.action.TIME_TICK"));
         } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "サービス(ExpireNotifierService)を停止します", Toast.LENGTH_LONG).show();
-            // Serviceの停止（テスト）
-            Intent intent = new Intent(getApplication(), ExpireNotifierService.class);
-            stopService(intent);
+            // BroadcastReceiverを解除する
+            Toast.makeText(this, "Receiverを(AgostickReceiver)を解除します", Toast.LENGTH_LONG).show();
+            this.unregisterReceiver(this.getAgostickReceiver());
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -172,4 +160,25 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, SwipeActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Agostickレシーバーを取得
+     *
+     * @return BroadcastReceiver
+     */
+    private BroadcastReceiver getAgostickReceiver()
+    {
+        BroadcastReceiver agostickReceiver = new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Serviceを開始
+                Intent expireNotifierService = new Intent(getApplication(), ExpireNotifierService.class);
+                expireNotifierService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startService(expireNotifierService);
+            }
+        };
+
+        return agostickReceiver;
+    }
+
 }
