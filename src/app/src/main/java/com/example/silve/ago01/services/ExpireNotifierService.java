@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.example.silve.ago01.models.DataBaseHelper;
+import com.example.silve.ago01.models.entity.Item;
+import com.example.silve.ago01.models.repository.ItemRepository;
+import com.example.silve.ago01.models.specification.sql.item.FindAllSpecification;
+
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 商品期限を監視して通知するやつ
@@ -32,6 +38,10 @@ public class ExpireNotifierService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (this.shouldTaskStart() == true) {
             Toast.makeText(this, "AGO！", Toast.LENGTH_LONG).show();
+
+            List<Item> itemList = this.findItemAll();
+
+            String aaa = "aaa";
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -58,6 +68,26 @@ public class ExpireNotifierService extends Service {
         int intMinutes = Integer.parseInt(textMinutes.toString());
 
         return (intMinutes % NOTIFIER_EXEC_PER) == 0;
+    }
+
+    /**
+     * 商品一覧をすべて取得
+     *
+     * @return
+     */
+    private List<Item> findItemAll()
+    {
+        // リポジトリ用意
+        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        ItemRepository cRepository = new ItemRepository(dbHelper);
+
+        // Specification
+        FindAllSpecification iAllSpec = new FindAllSpecification();
+
+        // 取得実行
+        List<Item> itemList =  cRepository.query(iAllSpec);
+
+        return itemList;
     }
 
 }
