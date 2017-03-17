@@ -5,10 +5,17 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 /**
  * 商品期限を監視して通知するやつ
  */
 public class ExpireNotifierService extends Service {
+
+    /**
+     * 何分おきに実行するか
+     */
+    private static final int NOTIFIER_EXEC = 5;
 
     /**
      * 初期化するだけ
@@ -23,7 +30,9 @@ public class ExpireNotifierService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "AGO！", Toast.LENGTH_LONG).show();
+        if (this.shouldTaskStart() == true) {
+            Toast.makeText(this, "AGO！", Toast.LENGTH_LONG).show();
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -36,6 +45,14 @@ public class ExpireNotifierService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private boolean shouldTaskStart()
+    {
+        CharSequence textMinutes  = android.text.format.DateFormat.format("mm", Calendar.getInstance());
+        int intMinutes = Integer.parseInt(textMinutes.toString());
+
+        return true;
     }
 
 }
