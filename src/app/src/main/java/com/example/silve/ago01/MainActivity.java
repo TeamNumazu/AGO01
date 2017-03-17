@@ -1,10 +1,11 @@
 package com.example.silve.ago01;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,13 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.design.widget.TabLayout;
 import android.widget.Toast;
 
 import com.example.silve.ago01.activity.SwipeActivity;
-import com.example.silve.ago01.models.AgoContract;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.repository.CategoryRepository;
@@ -132,10 +131,20 @@ public class MainActivity extends AppCompatActivity
 
             notificator.doNotice(message, title);
         } else if (id == R.id.nav_slideshow) {
-            Toast.makeText(this, "サービス(ExpireNotifierService)を開始します", Toast.LENGTH_LONG).show();
-            // Serviceの開始（テスト）
-            Intent intent = new Intent(getApplication(), ExpireNotifierService.class);
-            startService(intent);
+            // レシーバー登録
+            BroadcastReceiver agostickReceiver = new BroadcastReceiver(){
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    // Serviceを開始
+                    Intent expireNotifierService = new Intent(getApplication(), ExpireNotifierService.class);
+                    expireNotifierService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startService(expireNotifierService);
+                }
+            };
+
+            // BroadcastReceiverを登録する
+            Toast.makeText(this, "Receiverを(AgostickReceiver)を登録します", Toast.LENGTH_LONG).show();
+            this.registerReceiver(agostickReceiver, new IntentFilter("android.intent.action.TIME_TICK"));
         } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "サービス(ExpireNotifierService)を停止します", Toast.LENGTH_LONG).show();
             // Serviceの停止（テスト）

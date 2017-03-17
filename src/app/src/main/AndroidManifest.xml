@@ -46,6 +46,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            add Agostick
+        -->
         <service android:name=".services.ExpireNotifierService" />
     </application>
 
