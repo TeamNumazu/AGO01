@@ -15,7 +15,7 @@ public class ExpireNotifierService extends Service {
     /**
      * 何分おきに実行するか
      */
-    private static final int NOTIFIER_EXEC = 5;
+    private static final int NOTIFIER_EXEC_PER = 2;
 
     /**
      * 初期化するだけ
@@ -47,12 +47,17 @@ public class ExpireNotifierService extends Service {
         return null;
     }
 
+    /**
+     * 処理を実行する条件
+     *
+     * @return boolean
+     */
     private boolean shouldTaskStart()
     {
         CharSequence textMinutes  = android.text.format.DateFormat.format("mm", Calendar.getInstance());
         int intMinutes = Integer.parseInt(textMinutes.toString());
 
-        return true;
+        return (intMinutes % NOTIFIER_EXEC) == 0;
     }
 
 }
