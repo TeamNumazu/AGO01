@@ -43,6 +43,17 @@ import android.widget.Toast;
 
 public class ItemRegisterActivity extends AppCompatActivity {
 
+    private String mImagePath = "";
+    //カメラようだよーーー
+
+    static protected int REQUEST_CODE_CAMERA  = 0x00000001;
+    static protected int REQUEST_CODE_GALLERY = 0x00000002;
+    static protected int REQUEST_USE_CAMERA_AND_STORAGE = 0x00000003;
+
+
+    private Bitmap bitmap;
+    private Uri bitmapUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,24 +87,16 @@ public class ItemRegisterActivity extends AppCompatActivity {
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());
         item.setNumber(Long.parseLong(number.getText().toString()));
+        item.setItemImage(mImagePath);
 
         DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
         ItemRepository iRepository = new ItemRepository(dbHelper);
         iRepository.add(item);
     }
 
-    //カメラようだよーーー
-
-    static protected int REQUEST_CODE_CAMERA  = 0x00000001;
-    static protected int REQUEST_CODE_GALLERY = 0x00000002;
-    static protected int REQUEST_USE_CAMERA_AND_STORAGE = 0x00000003;
-
-
-    private Bitmap bitmap;
-    private Uri bitmapUri;
 
     public void onClickCameraButton(View v) {
-//        wakeupCamera(); // カメラ起動
+        // カメラ起動
         //選択項目を準備する。
         String[] str_items = {"カメラで撮影", "ギャラリーから選択", "キャンセル"};
         new AlertDialog.Builder(this)
@@ -122,7 +125,6 @@ public class ItemRegisterActivity extends AppCompatActivity {
      */
     protected void wakeupCamera(){
         File mediaStorageDir = null;
-
 
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             //RUNTIME PERMISSION Android M
@@ -246,8 +248,8 @@ public class ItemRegisterActivity extends AppCompatActivity {
             }
             //こいつは受け取った写真のviewになる。
             ImageView itemView = (ImageView) findViewById(R.id.item_view);
+            mImagePath = bitmapUri.getPath();
             itemView.setImageURI(bitmapUri);
-//            itemView.setImageBitmap(bitmap);
 
         }
     }
