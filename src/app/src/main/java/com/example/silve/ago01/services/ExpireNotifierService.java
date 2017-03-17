@@ -57,7 +57,7 @@ public class ExpireNotifierService extends Service {
         CharSequence textMinutes  = android.text.format.DateFormat.format("mm", Calendar.getInstance());
         int intMinutes = Integer.parseInt(textMinutes.toString());
 
-        return (intMinutes % NOTIFIER_EXEC) == 0;
+        return (intMinutes % NOTIFIER_EXEC_PER) == 0;
     }
 
 }
