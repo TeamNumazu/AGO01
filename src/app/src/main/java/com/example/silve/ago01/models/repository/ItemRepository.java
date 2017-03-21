@@ -1,14 +1,19 @@
 package com.example.silve.ago01.models.repository;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.silve.ago01.models.AgoContract;
 
 import com.example.silve.ago01.models.DataBaseHelper;
+import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.entity.Item;
+import com.example.silve.ago01.models.mapper.ItemMapper;
 import com.example.silve.ago01.models.specification.sql.Specification;
+import com.example.silve.ago01.models.specification.sql.SqlSpecification;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +23,11 @@ import java.util.List;
 public class ItemRepository implements Repository<Item> {
 
     private final DataBaseHelper mDataBaseHelper;
+    private final ItemMapper mItemMapper;
 
     public ItemRepository(DataBaseHelper dbHelper) {
         mDataBaseHelper = dbHelper;
+        mItemMapper = new ItemMapper();
     }
 
     @Override
@@ -72,6 +79,26 @@ public class ItemRepository implements Repository<Item> {
 
     @Override
     public List<Item> query(Specification specification) {
-        return null;
+
+        final SqlSpecification sqlSpecification = (SqlSpecification) specification;
+        final SQLiteDatabase database = mDataBaseHelper.getReadableDatabase();
+
+        final List<Item> items = new ArrayList<>();
+        
+        try {
+
+            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
+
+            for (int i = 0, size = cursor.getCount(); i < size; i++) {
+                cursor.moveToPosition(i);
+
+                items.add(mItemMapper.map(cursor));
+            }
+
+            return items;
+        } finally {
+            database.close();
+        }
     }
+
 }

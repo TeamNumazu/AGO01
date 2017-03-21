@@ -1,6 +1,7 @@
 package com.example.silve.ago01.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -39,9 +40,7 @@ public class ExpireNotifierService extends Service {
         if (this.shouldTaskStart() == true) {
             Toast.makeText(this, "AGO！", Toast.LENGTH_LONG).show();
 
-            List<Item> itemList = this.findItemAll();
-
-            String aaa = "aaa";
+            List<Item> itemList = this.findItemAll(getApplicationContext());
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -75,10 +74,10 @@ public class ExpireNotifierService extends Service {
      *
      * @return
      */
-    private List<Item> findItemAll()
+    public List<Item> findItemAll(Context context)
     {
         // リポジトリ用意
-        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        DataBaseHelper dbHelper = new DataBaseHelper(context);
         ItemRepository cRepository = new ItemRepository(dbHelper);
 
         // Specification
