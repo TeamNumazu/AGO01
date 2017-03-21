@@ -15,11 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.support.design.widget.TabLayout;
 import android.widget.Toast;
 
-import com.example.silve.ago01.activity.SwipeActivity;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.entity.Item;
@@ -33,19 +31,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    ListView listView;
-
-    private static final String[] foods = {
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-            "たまご", "とうふ", "バナナ", "レタス", "エリンギ", "巨乳",
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,12 +141,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, ItemRegisterActivity.class);
         startActivity(intent);
 
-    }
-
-    public void agostickDisplay(View view)
-    {
-        Intent intent = new Intent(this, SwipeActivity.class);
-        startActivity(intent);
     }
 
     /**
