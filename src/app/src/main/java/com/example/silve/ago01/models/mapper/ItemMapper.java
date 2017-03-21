@@ -24,11 +24,14 @@ public class ItemMapper implements Mapper<Cursor, Item> {
         //itemが選択されていれば取得する
         if (CursorColumnExistSpecification.isSatisfied(from.getColumnIndex(AgoContract.Item._ID))) {
 
-            String itemName = from.getString(
-                    from.getColumnIndex(AgoContract.Item.COLUMN_NAME_CATEGORYID)
-            );
-
-            item.setItemName(itemName);
+            item.setCategoryId(from.getLong(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_CATEGORYID)));
+            item.setItemName(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_ITEMNAME)));
+            item.setItemImage(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_ITEMIMAGE)));
+            item.setExpiredAt(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_EXPIRED_AT)));
+            item.setCreatedAt(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_CREATED_AT)));
+            item.setUpdatedAt(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_UPDATED_AT)));
+            item.setIsBuy(from.getString(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_IS_BUY)));
+            item.setNumber(from.getLong(from.getColumnIndex(AgoContract.Item.COLUMN_NAME_NUMBER)));
 
         }
 
