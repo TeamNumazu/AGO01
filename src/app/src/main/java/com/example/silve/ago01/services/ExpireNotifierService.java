@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
@@ -42,14 +43,24 @@ public class ExpireNotifierService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (this.shouldTaskStart() == false) {
-            // すべての商品
-            List<Item> itemList = this.findItemAll(getApplicationContext());
+
+        Toast.makeText(this, "Broadcasting", Toast.LENGTH_LONG).show();
+
+        if (this.shouldTaskStart() == true) {
+            Toast.makeText(this, "商品の監視を実行します..", Toast.LENGTH_LONG).show();
+
+            Context context = getApplicationContext();
+
+            // すべての商品をDBから取得
+            List<Item> itemList = this.findItemAll(context);
 
             // 有効期限の切れている商品だけを取得
             List<Item> expiredItemList = this.getExpiredList(itemList);
 
-
+            if (expiredItemList.size() > 0) {
+                // まとめて通知
+                this.doBulkNotice(context, expiredItemList);
+            }
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -133,6 +144,30 @@ public class ExpireNotifierService extends Service {
         }
 
         return expiredList;
+    }
+
+    /**
+     * 通知を行います
+     *
+     * @param context
+     * @param itemList
+     */
+    private void doBulkNotice(Context context, List<Item> itemList)
+    {
+        // 賞味期限切れの商品名（改行で結合）
+        List itemNameList = new ArrayList<>();
+
+        for (int i = 0, size = itemList.size(); i < size; i++) {
+            Item item = itemList.get(i);
+            itemNameList.add(item);
+        }
+
+        // 通知の準備
+        AgostickNotification notifier = new AgostickNotification(context);
+        String title = "次の商品が賞味期限切れです！";
+
+        // 通知を実行
+        notifier.doNotice(itemNameList, title);
     }
 
 }
