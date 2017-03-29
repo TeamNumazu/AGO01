@@ -44,7 +44,7 @@ public class SwipeActivity extends AppCompatActivity {
                 "Chika Takami", "You Watanabe", "Riko Sakurauchi",
                 "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
                 "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"};
-        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, dataList));
+        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position_name, dataList));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -11,16 +11,18 @@ import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.example.silve.ago01.R;
+import com.example.silve.ago01.models.entity.Item;
+
+import java.util.List;
 
 public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
+    private List<Item> mItemList;
 
-    private String[] mAdapterData;
-
-    public ListViewAdapter(Context mContext, String[] adapterData) {
+    public ListViewAdapter(Context mContext, List<Item> itemList) {
         this.mContext = mContext;
-        this.mAdapterData = adapterData;
+        this.mItemList = itemList;
     }
 
     @Override
@@ -55,13 +57,24 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
     @Override
     public void fillValues(int position, View convertView) {
-        TextView t = (TextView)convertView.findViewById(R.id.position);
-        t.setText((position + 1) + ".");
+        Item item = mItemList.get(position);
+
+        // 商品名
+        TextView name = (TextView)convertView.findViewById(R.id.position_name);
+        name.setText((position + 1) + ". " + item.getItemName());
+
+        // 個数
+        TextView quantity = (TextView)convertView.findViewById(R.id.position_quantity);
+        quantity.setText(String.valueOf(item.getNumber()));
+
+        // 期限
+        TextView expire = (TextView)convertView.findViewById(R.id.position_expire);
+        expire.setText(item.getExpiredAt());
     }
 
     @Override
     public int getCount() {
-        return mAdapterData.length;
+        return mItemList.size();
     }
 
     @Override

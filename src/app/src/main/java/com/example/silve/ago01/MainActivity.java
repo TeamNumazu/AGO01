@@ -26,15 +26,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.util.Attributes;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.repository.CategoryRepository;
+import com.example.silve.ago01.models.repository.ItemRepository;
 import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
 import com.example.silve.ago01.activity.ItemRegisterActivity;
+import com.example.silve.ago01.models.specification.sql.item.FindAllSpecification;
 import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
 import com.example.silve.ago01.views.ArraySwipeAdapterSample;
+import com.example.silve.ago01.views.ListViewAdapter;
 
 import java.util.List;
 
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView mListView;
+    private ListViewAdapter mAdapter;
     private Context mContext = this;
 
     @Override
@@ -76,7 +81,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        // データ取得
+        ItemRepository iRepository = new ItemRepository(dbHelper);
 
+        FindAllSpecification iAllSpec = new FindAllSpecification();
+        List<Item> itemList = iRepository.query(iAllSpec);
 
         /**
          * SwipeListViewをつくる
@@ -89,15 +98,9 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        /**
-         * The following comment is the sample usage of ArraySwipeAdapter.
-         */
-        String[] dataList = new String[]{
-                "Chika Takami", "You Watanabe", "Riko Sakurauchi",
-                "Ruby Kurosawa", "Hanamaru Kunikida", "Yoshiko Tsushima",
-                "Dia Kurosawa", "Kanan Matsuura", "Mari Ohara"};
-        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, dataList));
-
+        mAdapter = new ListViewAdapter(this, itemList);
+        mListView.setAdapter(mAdapter);
+        mAdapter.setMode(Attributes.Mode.Single);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
