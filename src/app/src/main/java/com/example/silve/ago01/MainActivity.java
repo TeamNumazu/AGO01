@@ -37,7 +37,6 @@ import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.models.specification.sql.item.FindAllSpecification;
 import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
-import com.example.silve.ago01.views.ArraySwipeAdapterSample;
 import com.example.silve.ago01.views.ListViewAdapter;
 
 import java.util.List;
