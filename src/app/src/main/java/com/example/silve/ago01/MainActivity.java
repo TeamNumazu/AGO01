@@ -200,9 +200,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Receiverを(AgostickReceiver)を解除します", Toast.LENGTH_LONG).show();
             this.unregisterReceiver(this.getAgostickReceiver());
         } else if (id == R.id.nav_share) {
-            // デバッグ用
-            ExpireNotifierService notifier = new ExpireNotifierService();
-            List<Item> listItem = notifier.findItemAll(getApplicationContext());
+
         } else if (id == R.id.nav_send) {
 
         }

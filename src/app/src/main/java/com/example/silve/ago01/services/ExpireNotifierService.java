@@ -89,11 +89,11 @@ public class ExpireNotifierService extends Service {
     }
 
     /**
-     * 商品一覧をすべて取得（デバッグ用にPublicなので後で変える）
+     * 商品一覧をすべて取得
      *
      * @return
      */
-    public List<Item> findItemAll(Context context) {
+    private List<Item> findItemAll(Context context) {
         // リポジトリ用意
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         ItemRepository cRepository = new ItemRepository(dbHelper);
