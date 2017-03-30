@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import android.database.Cursor;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ItemRegisterActivity extends AppCompatActivity {
@@ -83,6 +84,18 @@ public class ItemRegisterActivity extends AppCompatActivity {
         EditText expiredAt = (EditText) findViewById(R.id.expired_at);
         EditText number = (EditText) findViewById(R.id.number);
 
+        Context context = getApplicationContext();
+        if (itemName.length() < 1) {
+            Toast.makeText(context, "商品名を入力してください", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (expiredAt.length() < 1) {
+            Toast.makeText(context, "期限を入力してください", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (number.length() < 1) {
+            Toast.makeText(context, "個数を入力してください", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Item item = new Item();
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());
@@ -92,6 +105,11 @@ public class ItemRegisterActivity extends AppCompatActivity {
         DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
         ItemRepository iRepository = new ItemRepository(dbHelper);
         iRepository.add(item);
+
+        Toast.makeText(context, "登録しました", Toast.LENGTH_SHORT).show();
+        itemName.setText("");
+        expiredAt.setText("");
+        number.setText("");
     }
 
 
