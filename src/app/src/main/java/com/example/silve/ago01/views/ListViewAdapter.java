@@ -37,16 +37,24 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-                Toast.makeText(mContext, "open", Toast.LENGTH_SHORT).show();
+                // スライドしてメニューを開いたとき
             }
         });
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
+                // ダブルタップしたとき
             }
         });
-        v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
+            // 編集おしたとき
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "click edit", Toast.LENGTH_SHORT).show();
+            }
+        });
+        v.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener() {
+            // 削除おしたとき
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();

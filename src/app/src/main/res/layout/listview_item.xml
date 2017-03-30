@@ -9,36 +9,25 @@
     swipe:rightEdgeSwipeOffset="0dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#FF5534"
-        android:gravity="center"
-        android:tag="Bottom3"
-        android:weightSum="10">
-
+        android:tag="Bottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/edit"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_width="70dp"
+            android:background="#f7e79c"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/trash"
-            android:layout_width="27dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_menu_share" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="Delete Item?"
-            android:textColor="#fff"
-            android:textSize="17sp" />
-
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="4"
-            android:background="#fff"
-            android:text="Yes,Delete"
-            android:textColor="#FF5534" />
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_width="70dp"
+            android:background="#aa0139"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
