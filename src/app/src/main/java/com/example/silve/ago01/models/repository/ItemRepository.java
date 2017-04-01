@@ -12,6 +12,7 @@ import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.mapper.ItemMapper;
 import com.example.silve.ago01.models.specification.sql.Specification;
 import com.example.silve.ago01.models.specification.sql.SqlSpecification;
+import com.example.silve.ago01.models.specification.sql.item.DeleteItemSpecification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,16 @@ public class ItemRepository implements Repository<Item> {
 
     @Override
     public void remove(Item item) {
+        final SQLiteDatabase database = mDataBaseHelper.getWritableDatabase();
 
+        try {
+            database.beginTransaction();
+            database.delete(AgoContract.Item.TABLE_NAME, AgoContract.Item._ID + "= ?", new String[]{String.valueOf(item.get_id())});
+            database.endTransaction();
+
+        } finally {
+
+        }
     }
 
     @Override
@@ -84,7 +94,7 @@ public class ItemRepository implements Repository<Item> {
         final SQLiteDatabase database = mDataBaseHelper.getReadableDatabase();
 
         final List<Item> items = new ArrayList<>();
-        
+
         try {
 
             final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
