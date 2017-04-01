@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.silve.ago01.fragments.PageFragment;
@@ -30,17 +29,12 @@ import com.example.silve.ago01.models.specification.sql.category.CategoriesSpeci
 import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
-import com.example.silve.ago01.views.ListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, PageFragment.OnFragmentInteractionListener {
-
-    private ListView mListView;
-    private ListViewAdapter mAdapter;
-    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
