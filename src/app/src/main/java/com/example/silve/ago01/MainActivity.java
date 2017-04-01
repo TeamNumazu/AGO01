@@ -5,8 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +30,7 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
+import com.example.silve.ago01.fragments.PageFragment;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.entity.Item;
@@ -41,7 +46,7 @@ import com.example.silve.ago01.views.ListViewAdapter;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, PageFragment.OnFragmentInteractionListener {
 
     private ListView mListView;
     private ListViewAdapter mAdapter;
@@ -52,17 +57,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout)  findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
         CategoryRepository cRepository = new CategoryRepository(dbHelper);
 
         CategoriesSpecification cAllSpec = new CategoriesSpecification();
 
-        List<Category> categories =  cRepository.query(cAllSpec);
+        List<Category> categories = cRepository.query(cAllSpec);
 
-
-        for(Category category :categories){
+        for (Category category : categories) {
             tabLayout.addTab(tabLayout.newTab().setText(category.getCategoryName()));
         }
 
@@ -80,11 +84,41 @@ public class MainActivity extends AppCompatActivity
 
         // 商品リストビュー生成
         this.createListView();
+
+
+        // xmlからViewPagerを取得
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        // ページタイトル配列
+        final String[] pageTitle = {"HOME", "EVENT", "SETTING"};
+
+        // 表示Pageに必要な項目を設定
+        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return PageFragment.newInstance(position + 1);
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return pageTitle[position];
+            }
+
+            @Override
+            public int getCount() {
+                return pageTitle.length;
+            }
+        };
+
+        // ViewPagerにページを設定
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(this);
+
+        // ViewPagerをTabLayoutを設定
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 
         // リストビューを再生成
@@ -158,8 +192,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void createListView()
-    {
+    public void createListView() {
         /**
          * データ取得
          */
@@ -186,7 +219,7 @@ public class MainActivity extends AppCompatActivity
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
+                ((SwipeLayout) (mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
             }
         });
         mListView.setOnTouchListener(new View.OnTouchListener() {
@@ -226,7 +259,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void changeItemRegisterDisplay(View view){
+    public void changeItemRegisterDisplay(View view) {
         Intent intent = new Intent(this, ItemRegisterActivity.class);
         startActivity(intent);
 
@@ -237,9 +270,8 @@ public class MainActivity extends AppCompatActivity
      *
      * @return BroadcastReceiver
      */
-    private BroadcastReceiver getAgostickReceiver()
-    {
-        BroadcastReceiver agostickReceiver = new BroadcastReceiver(){
+    private BroadcastReceiver getAgostickReceiver() {
+        BroadcastReceiver agostickReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Serviceを開始
@@ -250,6 +282,22 @@ public class MainActivity extends AppCompatActivity
         };
 
         return agostickReceiver;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
     }
 
 }
