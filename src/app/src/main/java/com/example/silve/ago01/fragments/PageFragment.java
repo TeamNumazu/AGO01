@@ -60,7 +60,10 @@ public class PageFragment extends Fragment {
         int page = getArguments().getInt(ARG_PARAM, 0);
         View view = inflater.inflate(R.layout.fragment_page, container, false);
 
-        this.createListView(view);
+        // 動作確認用分岐
+        if (page == 1) {
+            this.createListView(view);
+        }
 
         return view;
     }
@@ -92,7 +95,11 @@ public class PageFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
+    /**
+     * このカテゴリタブのリストビューを生成
+     *
+     * @param view
+     */
     public void createListView(View view) {
         /**
          * データ取得
