@@ -43,6 +43,7 @@ import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
 import com.example.silve.ago01.views.ListViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -59,17 +60,6 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
-        CategoryRepository cRepository = new CategoryRepository(dbHelper);
-
-        CategoriesSpecification cAllSpec = new CategoriesSpecification();
-
-        List<Category> categories = cRepository.query(cAllSpec);
-
-        for (Category category : categories) {
-            tabLayout.addTab(tabLayout.newTab().setText(category.getCategoryName()));
-        }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,14 +72,23 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // 商品リストビュー生成
-        this.createListView();
+        /**
+         * カテゴリのタブを生成
+         */
+        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        CategoryRepository cRepository = new CategoryRepository(dbHelper);
+        CategoriesSpecification cAllSpec = new CategoriesSpecification();
 
+        List<Category> categories = cRepository.query(cAllSpec);
+
+        final ArrayList<String> tabNames = new ArrayList<>();
+        for (Category category : categories) {
+            tabNames.add(category.getCategoryName());
+        }
+        final CharSequence[] pageTitle = tabNames.toArray(new CharSequence[tabNames.size()]);
 
         // xmlからViewPagerを取得
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        // ページタイトル配列
-        final String[] pageTitle = {"HOME", "EVENT", "SETTING"};
 
         // 表示Pageに必要な項目を設定
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -115,6 +114,10 @@ public class MainActivity extends AppCompatActivity
 
         // ViewPagerをTabLayoutを設定
         tabLayout.setupWithViewPager(viewPager);
+
+
+        // 商品リストビュー生成
+        this.createListView();
     }
 
     @Override
