@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.example.silve.ago01.R;
+import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
+import com.example.silve.ago01.models.repository.ItemRepository;
 
 import java.util.List;
 
@@ -19,10 +20,17 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
     private List<Item> mItemList;
+    private ItemRepository mIRepository;
 
     public ListViewAdapter(Context mContext, List<Item> itemList) {
         this.mContext = mContext;
         this.mItemList = itemList;
+        initialize();
+    }
+
+    public void initialize(){
+        mIRepository = new ItemRepository(new DataBaseHelper(mContext));
+
     }
 
     @Override
@@ -57,6 +65,10 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             // 削除おしたとき
             @Override
             public void onClick(View view) {
+
+
+                Item item = mItemList.get(0);
+                mIRepository.remove(item);
                 Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
             }
         });
