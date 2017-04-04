@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -29,6 +28,7 @@ import com.example.silve.ago01.models.specification.sql.category.CategoriesSpeci
 import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
+import com.example.silve.ago01.views.AgostickPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,31 +65,17 @@ public class MainActivity extends AppCompatActivity
         List<Category> categories = cRepository.query(cAllSpec);
 
         final ArrayList<String> tabNames = new ArrayList<>();
+        final ArrayList<Long> tabIdList = new ArrayList<>();
         for (Category category : categories) {
             tabNames.add(category.getCategoryName());
+            tabIdList.add(category.get_id());
         }
-        final CharSequence[] pageTitle = tabNames.toArray(new CharSequence[tabNames.size()]);
 
         // xmlからViewPagerを取得
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
         // 表示Pageに必要な項目を設定
-        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return PageFragment.newInstance(position + 1);
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return pageTitle[position];
-            }
-
-            @Override
-            public int getCount() {
-                return pageTitle.length;
-            }
-        };
+        FragmentPagerAdapter adapter = new AgostickPagerAdapter(getSupportFragmentManager(), tabNames, tabIdList);
 
         // ViewPagerにページを設定
         viewPager.setAdapter(adapter);

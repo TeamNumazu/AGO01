@@ -19,10 +19,12 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
     private List<Item> mItemList;
+    private int mCategoryId;
 
-    public ListViewAdapter(Context mContext, List<Item> itemList) {
+    public ListViewAdapter(Context mContext, List<Item> itemList, int categoryId) {
         this.mContext = mContext;
         this.mItemList = itemList;
+        this.mCategoryId = categoryId;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
         // 商品名
         TextView name = (TextView)convertView.findViewById(R.id.position_name);
-        name.setText((position + 1) + ". " + item.getItemName());
+        name.setText((position + 1) + ". " + item.getItemName() + "    CategoryID = " + this.mCategoryId);
 
         // 個数
         TextView quantity = (TextView)convertView.findViewById(R.id.position_quantity);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import java.util.List;
 public class PageFragment extends Fragment {
 
     private static final String ARG_PARAM = "page";
+    private static final String ARG_PARAM_CATEGORY_ID = "category_id";
     private String mParam;
     private OnFragmentInteractionListener mListener;
 
@@ -37,10 +39,11 @@ public class PageFragment extends Fragment {
     public PageFragment() {
     }
 
-    public static PageFragment newInstance(int page) {
+    public static PageFragment newInstance(int page, Long categoryId) {
         PageFragment fragment = new PageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM, page);
+        args.putInt(ARG_PARAM_CATEGORY_ID, categoryId.intValue());
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,12 +61,11 @@ public class PageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         int page = getArguments().getInt(ARG_PARAM, 0);
+        int categoryId = getArguments().getInt(ARG_PARAM_CATEGORY_ID, 0);
         View view = inflater.inflate(R.layout.fragment_page, container, false);
 
         // 動作確認用分岐
-        if (page == 1) {
-            this.createListView(view);
-        }
+        this.createListView(view, categoryId);
 
         return view;
     }
@@ -100,7 +102,7 @@ public class PageFragment extends Fragment {
      *
      * @param view
      */
-    public void createListView(View view) {
+    public void createListView(View view, Integer categoryId) {
         /**
          * データ取得
          */
@@ -124,7 +126,7 @@ public class PageFragment extends Fragment {
             }
         }
 
-        listAdapter = new ListViewAdapter(getActivity(), itemList);
+        listAdapter = new ListViewAdapter(getActivity(), itemList, categoryId);
         listView.setAdapter(listAdapter);
         listAdapter.setMode(Attributes.Mode.Single);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
