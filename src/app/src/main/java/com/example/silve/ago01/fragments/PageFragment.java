@@ -24,6 +24,7 @@ import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.repository.ItemRepository;
 import com.example.silve.ago01.models.specification.sql.item.FindAllSpecification;
+import com.example.silve.ago01.models.specification.sql.item.FindByCategorySpecification;
 import com.example.silve.ago01.views.ListViewAdapter;
 
 import java.util.List;
@@ -109,8 +110,8 @@ public class PageFragment extends Fragment {
         DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
         ItemRepository iRepository = new ItemRepository(dbHelper);
 
-        FindAllSpecification iAllSpec = new FindAllSpecification();
-        List<Item> itemList = iRepository.query(iAllSpec);
+        FindByCategorySpecification iByCategorySpec = new FindByCategorySpecification(categoryId);
+        List<Item> itemList = iRepository.query(iByCategorySpec);
 
         /**
          * SwipeListViewをつくる

@@ -18,7 +18,7 @@ public class FindByCategorySpecification implements SqlSpecification {
     @Override
     public String toSqlQuery() {
 
-        return String.format("SELECT * FROM ITEM WHERE %1$S WHERE " +
+        return String.format("SELECT * FROM %1$S WHERE " +
                         AgoContract.Item.COLUMN_NAME_CATEGORYID + "= %2$S",
                 AgoContract.Item.TABLE_NAME,
                 categoryId
