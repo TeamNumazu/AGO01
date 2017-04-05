@@ -56,6 +56,7 @@ public class PageFragment extends Fragment {
         if (getArguments() != null) {
             mParam = getArguments().getString(ARG_PARAM);
         }
+
     }
 
     @Override
@@ -84,7 +85,7 @@ public class PageFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "hogehogehoge!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "category_id = " + categoryId, Toast.LENGTH_SHORT).show();
             }
         });
     }
