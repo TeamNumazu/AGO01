@@ -152,12 +152,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void changeItemRegisterDisplay(View view) {
-        Intent intent = new Intent(this, ItemRegisterActivity.class);
-        startActivity(intent);
-
-    }
-
     /**
      * Agostickレシーバーを取得
      *

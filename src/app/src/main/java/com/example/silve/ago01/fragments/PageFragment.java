@@ -2,10 +2,11 @@ package com.example.silve.ago01.fragments;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +21,10 @@ import android.widget.Toast;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.example.silve.ago01.R;
+import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.repository.ItemRepository;
-import com.example.silve.ago01.models.specification.sql.item.FindAllSpecification;
 import com.example.silve.ago01.models.specification.sql.item.FindByCategorySpecification;
 import com.example.silve.ago01.views.ListViewAdapter;
 
@@ -62,13 +63,30 @@ public class PageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         int page = getArguments().getInt(ARG_PARAM, 0);
-        int categoryId = getArguments().getInt(ARG_PARAM_CATEGORY_ID, 0);
+        final int categoryId = this.getCategoryId();
+
         View view = inflater.inflate(R.layout.fragment_page, container, false);
 
         // 動作確認用分岐
         this.createListView(view, categoryId);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final int categoryId = this.getCategoryId();
+
+        // 商品追加フローティングボタン
+        FloatingActionButton button = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "hogehogehoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onButtonPressed(Uri uri) {
@@ -172,4 +190,20 @@ public class PageFragment extends Fragment {
             }
         });
     }
+
+    public void changeItemRegisterDisplay(View view) {
+        Intent intent = new Intent(getActivity(), ItemRegisterActivity.class);
+        intent.putExtra("category_id", this.getCategoryId());
+        startActivity(intent);
+    }
+
+    /**
+     * 表示中タブのカテゴリIDを取得
+     *
+     * @return
+     */
+    private int getCategoryId() {
+        return getArguments().getInt(ARG_PARAM_CATEGORY_ID, 0);
+    }
+
 }
