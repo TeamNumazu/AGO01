@@ -7,12 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.silve.ago01.models.AgoContract;
 
 import com.example.silve.ago01.models.DataBaseHelper;
-import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.mapper.ItemMapper;
 import com.example.silve.ago01.models.specification.sql.Specification;
 import com.example.silve.ago01.models.specification.sql.SqlSpecification;
-import com.example.silve.ago01.models.specification.sql.item.DeleteItemSpecification;
+//import com.example.silve.ago01.models.specification.sql.item.DeleteItemSpecification;
 
 import java.util.ArrayList;
 import java.util.List;
