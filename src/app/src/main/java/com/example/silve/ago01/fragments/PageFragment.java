@@ -2,7 +2,6 @@ package com.example.silve.ago01.fragments;
 
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.example.silve.ago01.R;
-import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.repository.ItemRepository;
@@ -32,10 +30,16 @@ import java.util.List;
 
 public class PageFragment extends Fragment {
 
+    // Activityのボタンクリック用リスナ
+    public interface OnButtonClickListener {
+        public void onFloatingButtonClick(int categoryId);
+    }
+
     private static final String ARG_PARAM = "page";
     private static final String ARG_PARAM_CATEGORY_ID = "category_id";
     private String mParam;
     private OnFragmentInteractionListener mListener;
+    private OnButtonClickListener mButtonClickListener;
 
     // コンストラクタ
     public PageFragment() {
@@ -56,7 +60,6 @@ public class PageFragment extends Fragment {
         if (getArguments() != null) {
             mParam = getArguments().getString(ARG_PARAM);
         }
-
     }
 
     @Override
@@ -71,23 +74,18 @@ public class PageFragment extends Fragment {
         // 動作確認用分岐
         this.createListView(view, categoryId);
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        final int categoryId = this.getCategoryId();
-
         // 商品追加フローティングボタン
-        FloatingActionButton button = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "category_id = " + categoryId, Toast.LENGTH_SHORT).show();
+                if (mButtonClickListener != null) {
+                    mButtonClickListener.onFloatingButtonClick(categoryId);
+                }
             }
         });
+
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -104,6 +102,12 @@ public class PageFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+
+        if (context instanceof OnButtonClickListener) {
+            mButtonClickListener = ((OnButtonClickListener) context);
+        } else {
+            throw new ClassCastException("activity が OnButtonClickListener を実装していません.");
         }
     }
 
@@ -190,12 +194,6 @@ public class PageFragment extends Fragment {
                 Log.e("ListView", "onNothingSelected:");
             }
         });
-    }
-
-    public void changeItemRegisterDisplay(View view) {
-        Intent intent = new Intent(getActivity(), ItemRegisterActivity.class);
-        intent.putExtra("category_id", this.getCategoryId());
-        startActivity(intent);
     }
 
     /**

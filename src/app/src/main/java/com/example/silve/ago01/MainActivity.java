@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, PageFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, PageFragment.OnFragmentInteractionListener, PageFragment.OnButtonClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +169,17 @@ public class MainActivity extends AppCompatActivity
         };
 
         return agostickReceiver;
+    }
+
+    /**
+     * フローティングボタンクリック
+     *
+     * @param categoryId
+     */
+    public void onFloatingButtonClick(int categoryId) {
+        Intent intent = new Intent(this, ItemRegisterActivity.class);
+        intent.putExtra(ItemRegisterActivity.ARG_PARAM_CATEGORY_ID, categoryId);
+        startActivity(intent);
     }
 
     @Override

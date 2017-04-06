@@ -51,6 +51,8 @@ public class ItemRegisterActivity extends AppCompatActivity {
     static protected int REQUEST_CODE_GALLERY = 0x00000002;
     static protected int REQUEST_USE_CAMERA_AND_STORAGE = 0x00000003;
 
+    // 値受け渡し用のキー
+    public static final String ARG_PARAM_CATEGORY_ID = "category_id";
 
     private Bitmap bitmap;
     private Uri bitmapUri;
@@ -270,6 +272,16 @@ public class ItemRegisterActivity extends AppCompatActivity {
             itemView.setImageURI(bitmapUri);
 
         }
+    }
+
+    /**
+     * MainActivityから受け取ったカテゴリIDを取得します
+     *
+     * @return
+     */
+    private int getCategoryId() {
+        Intent intent = getIntent();
+        return intent.getIntExtra(this.ARG_PARAM_CATEGORY_ID, -1);
     }
 
 
