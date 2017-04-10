@@ -65,13 +65,11 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        int page = getArguments().getInt(ARG_PARAM, 0);
-        final int categoryId = this.getCategoryId();
-
+        // ビュー取得
         View view = inflater.inflate(R.layout.fragment_page, container, false);
 
-        // 動作確認用分岐
+        // リストビュー生成
+        final int categoryId = this.getCategoryId();
         this.createListView(view, categoryId);
 
         // 商品追加フローティングボタン
