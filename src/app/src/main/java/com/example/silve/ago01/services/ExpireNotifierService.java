@@ -31,6 +31,11 @@ public class ExpireNotifierService extends Service {
     private static final int NOTIFIER_EXEC_PER = 1;
 
     /**
+     * 期限の何日前に通知するか
+     */
+    private static final int NOTIFIER_DAY_MERGIN = 10;
+
+    /**
      * 初期化するだけ
      */
     @Override
@@ -108,7 +113,8 @@ public class ExpireNotifierService extends Service {
     }
 
     /**
-     * 有効期限が今日より前日の商品リストを取得します
+     * 有効期限が近い商品のリストを取得します
+     * 期限切れの商品は返却しません
      *
      * @param itemList
      * @return
@@ -116,8 +122,7 @@ public class ExpireNotifierService extends Service {
     private List<Item> getExpiredList(List<Item> itemList) {
         List<Item> expiredList = new ArrayList<>();
 
-        // 比較用日付フォーマット
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = this.getDateFormat();
 
         for (int i = 0, size = itemList.size(); i < size; i++) {
             Item item = itemList.get(i);
@@ -132,9 +137,20 @@ public class ExpireNotifierService extends Service {
                 Date now = new Date();
                 Date itemExpiredAt = format.parse(item.getExpiredAt());
 
-                // 比較
-                if (now.after(itemExpiredAt)) {
-                    // 今日より前日ならリストに追加
+                // 期限の近い商品をリストに追加
+                long fromDateTime = itemExpiredAt.getTime();
+                long toDateTime = now.getTime();
+
+                // 経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て。
+                int diffDays = (int) ((toDateTime - fromDateTime) / (1000 * 60 * 60 * 24));
+
+                // 期限切れ
+                if (diffDays < 1) {
+                    continue;
+                }
+
+                // 通知期間のやつはリストに追加
+                if (diffDays < NOTIFIER_DAY_MERGIN) {
                     expiredList.add(item);
                 }
             } catch (ParseException ex) {
@@ -152,8 +168,7 @@ public class ExpireNotifierService extends Service {
      * @param context
      * @param itemList
      */
-    private void doBulkNotice(Context context, List<Item> itemList)
-    {
+    private void doBulkNotice(Context context, List<Item> itemList) {
         // 賞味期限切れの商品名（改行で結合）
         List itemNameList = new ArrayList<>();
 
@@ -168,6 +183,15 @@ public class ExpireNotifierService extends Service {
 
         // 通知を実行
         notifier.doNotice(itemNameList, title);
+    }
+
+    /**
+     * 日付フォーマット yyyy/MM/dd
+     *
+     * @return SimpleDateFormat
+     */
+    private SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat("yyyy/MM/dd");
     }
 
 }
