@@ -63,7 +63,6 @@ public class ItemRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_register);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     /**
@@ -99,6 +98,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
         }
 
         Item item = new Item();
+        item.setCategoryId(this.getCategoryId());
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());
         item.setNumber(Long.parseLong(number.getText().toString()));
