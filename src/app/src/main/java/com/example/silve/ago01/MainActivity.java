@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,34 +52,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /**
-         * カテゴリのタブを生成
-         */
-        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
-        CategoryRepository cRepository = new CategoryRepository(dbHelper);
-        CategoriesSpecification cAllSpec = new CategoriesSpecification();
+        this.createViewPager();
+    }
 
-        List<Category> categories = cRepository.query(cAllSpec);
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        final ArrayList<String> tabNames = new ArrayList<>();
-        final ArrayList<Long> tabIdList = new ArrayList<>();
-        for (Category category : categories) {
-            tabNames.add(category.getCategoryName());
-            tabIdList.add(category.get_id());
-        }
-
-        // xmlからViewPagerを取得
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
-        // 表示Pageに必要な項目を設定
-        FragmentPagerAdapter adapter = new AgostickPagerAdapter(getSupportFragmentManager(), tabNames, tabIdList);
-
-        // ViewPagerにページを設定
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(this);
-
-        // ViewPagerをTabLayoutを設定
-        tabLayout.setupWithViewPager(viewPager);
+        this.createViewPager();
     }
 
     @Override
@@ -195,6 +173,44 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+    }
+
+    /**
+     * タブ、Pager、リストビューを生成
+     *
+     * @return void
+     */
+    private void createViewPager() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        /**
+         * カテゴリのタブを生成
+         */
+        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        CategoryRepository cRepository = new CategoryRepository(dbHelper);
+        CategoriesSpecification cAllSpec = new CategoriesSpecification();
+
+        List<Category> categories = cRepository.query(cAllSpec);
+
+        final ArrayList<String> tabNames = new ArrayList<>();
+        final ArrayList<Long> tabIdList = new ArrayList<>();
+        for (Category category : categories) {
+            tabNames.add(category.getCategoryName());
+            tabIdList.add(category.get_id());
+        }
+
+        // xmlからViewPagerを取得
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+
+        // 表示Pageに必要な項目を設定
+        FragmentPagerAdapter adapter = new AgostickPagerAdapter(getSupportFragmentManager(), tabNames, tabIdList);
+
+        // ViewPagerにページを設定
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(this);
+
+        // ViewPagerをTabLayoutを設定
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 }
