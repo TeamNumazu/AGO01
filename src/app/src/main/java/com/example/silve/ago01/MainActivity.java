@@ -117,20 +117,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            // 通知のテスト
-            AgostickNotification notificator = new AgostickNotification(getApplicationContext());
-
-            String message = "輝きたい！";
-            String title = "とぅるるるるるるる";
-
-            notificator.doNotice(message, title);
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-            // BroadcastReceiverを解除する
-            Toast.makeText(this, "Receiverを(AgostickReceiver)を解除します", Toast.LENGTH_LONG).show();
-            this.unregisterReceiver(this.getAgostickReceiver());
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
