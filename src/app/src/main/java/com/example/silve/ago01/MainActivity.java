@@ -67,6 +67,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // BroadcastReceiver（賞味期限監視サービス）を登録する
+        Toast.makeText(this, "[dev] Receiver(ExpireNotifierService)を登録します", Toast.LENGTH_LONG).show();
+        this.registerReceiver(this.getAgostickReceiver(), new IntentFilter("android.intent.action.TIME_TICK"));
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
