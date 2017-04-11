@@ -27,7 +27,9 @@ import com.example.silve.ago01.models.specification.sql.category.CategoriesSpeci
 import com.example.silve.ago01.activity.ItemRegisterActivity;
 import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
+import com.example.silve.ago01.utils.SwipeDirection;
 import com.example.silve.ago01.views.AgostickPagerAdapter;
+import com.example.silve.ago01.views.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -210,8 +212,8 @@ public class MainActivity extends AppCompatActivity
             tabIdList.add(category.get_id());
         }
 
-        // xmlからViewPagerを取得
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        // xmlからCustomViewPagerを取得
+        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.pager);
 
         // 表示Pageに必要な項目を設定
         FragmentPagerAdapter adapter = new AgostickPagerAdapter(getSupportFragmentManager(), tabNames, tabIdList);
@@ -219,6 +221,10 @@ public class MainActivity extends AppCompatActivity
         // ViewPagerにページを設定
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
+
+        // ViewPagerのスワイプを制御
+        // SwipeListViewのスワイプと操作が重複するためスワイプでの移動を禁止する。
+        viewPager.setAllowedSwipeDirection(SwipeDirection.none);
 
         // ViewPagerをTabLayoutを設定
         tabLayout.setupWithViewPager(viewPager);
