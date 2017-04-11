@@ -32,6 +32,8 @@ public class ExpireNotifierService extends Service {
 
     /**
      * 期限の何日前に通知するか
+     * 10なら期限が10日以内の場合通知する。
+     * ※現状だと一度通知した商品も毎回通知
      */
     private static final int NOTIFIER_DAY_MERGIN = 10;
 
