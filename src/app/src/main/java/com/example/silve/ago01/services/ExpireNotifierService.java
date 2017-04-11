@@ -48,9 +48,6 @@ public class ExpireNotifierService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Toast.makeText(this, "Broadcasting", Toast.LENGTH_LONG).show();
-
         if (this.shouldTaskStart() == true) {
             Toast.makeText(this, "商品の監視を実行します..", Toast.LENGTH_LONG).show();
 
@@ -138,14 +135,14 @@ public class ExpireNotifierService extends Service {
                 Date itemExpiredAt = format.parse(item.getExpiredAt());
 
                 // 期限の近い商品をリストに追加
-                long fromDateTime = itemExpiredAt.getTime();
-                long toDateTime = now.getTime();
+                long expireTime = itemExpiredAt.getTime();
+                long nowTime = now.getTime();
 
                 // 経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て。
-                int diffDays = (int) ((toDateTime - fromDateTime) / (1000 * 60 * 60 * 24));
+                int diffDays = (int) ((expireTime - nowTime) / (1000 * 60 * 60 * 24));
 
                 // 期限切れ
-                if (diffDays < 1) {
+                if (diffDays < 0) {
                     continue;
                 }
 
@@ -174,12 +171,16 @@ public class ExpireNotifierService extends Service {
 
         for (int i = 0, size = itemList.size(); i < size; i++) {
             Item item = itemList.get(i);
-            itemNameList.add(item);
+
+            // 通知に出力するメッセージ（1行）
+            itemNameList.add(item.getItemName() + " - " + item.getExpiredAt());
         }
 
         // 通知の準備
         AgostickNotification notifier = new AgostickNotification(context);
-        String title = "次の商品が賞味期限切れです！";
+
+        // 通知のタイトル
+        String title = "次の商品の賞味期限が近づいています";
 
         // 通知を実行
         notifier.doNotice(itemNameList, title);
