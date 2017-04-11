@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         this.createViewPager();
+
+        // BroadcastReceiver（賞味期限監視サービス）を登録する
+        Toast.makeText(this, "[dev] Receiver(ExpireNotifierService)を登録します", Toast.LENGTH_LONG).show();
+        this.registerReceiver(this.getAgostickReceiver(), new IntentFilter("android.intent.action.TIME_TICK"));
     }
 
     @Override
@@ -111,9 +115,7 @@ public class MainActivity extends AppCompatActivity
 
             notificator.doNotice(message, title);
         } else if (id == R.id.nav_slideshow) {
-            // BroadcastReceiverを登録する
-            Toast.makeText(this, "Receiverを(AgostickReceiver)を登録します", Toast.LENGTH_LONG).show();
-            this.registerReceiver(this.getAgostickReceiver(), new IntentFilter("android.intent.action.TIME_TICK"));
+
         } else if (id == R.id.nav_manage) {
             // BroadcastReceiverを解除する
             Toast.makeText(this, "Receiverを(AgostickReceiver)を解除します", Toast.LENGTH_LONG).show();
