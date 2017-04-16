@@ -1,6 +1,7 @@
 package com.example.silve.ago01.views;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,19 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                     if(mItemManger.isOpen(i)){
                         Item item  = mItemList.get(i);
                         mIRepository.remove(item);
+                        mItemList.remove(item);
+                        break;
 
                     }
+
                 }
+
+                notifyDataSetChanged();
                 Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
             }
+
         });
+
         return v;
     }
 
