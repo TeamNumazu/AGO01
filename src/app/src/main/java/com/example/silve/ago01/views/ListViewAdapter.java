@@ -68,9 +68,14 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             @Override
             public void onClick(View view) {
 
+                for(int i = 0 ; i < mItemList.size() ; i++){
 
-                Item item = mItemList.get(0);
-                mIRepository.remove(item);
+                    if(mItemManger.isOpen(i)){
+                        Item item  = mItemList.get(i);
+                        mIRepository.remove(item);
+
+                    }
+                }
                 Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
             }
         });
