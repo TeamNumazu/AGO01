@@ -25,7 +25,6 @@ import com.example.silve.ago01.models.entity.Category;
 import com.example.silve.ago01.models.repository.CategoryRepository;
 import com.example.silve.ago01.models.specification.sql.category.CategoriesSpecification;
 import com.example.silve.ago01.activity.ItemRegisterActivity;
-import com.example.silve.ago01.services.AgostickNotification;
 import com.example.silve.ago01.services.ExpireNotifierService;
 import com.example.silve.ago01.utils.SwipeDirection;
 import com.example.silve.ago01.views.AgostickPagerAdapter;
@@ -115,12 +114,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_add_category) {
+            Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_toggle_notice) {
+            Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_import) {
+            Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_export) {
+            Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
