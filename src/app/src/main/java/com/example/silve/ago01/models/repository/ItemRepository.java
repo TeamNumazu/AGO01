@@ -74,10 +74,10 @@ public class ItemRepository implements Repository<Item> {
         try {
             database.beginTransaction();
             database.delete(AgoContract.Item.TABLE_NAME, AgoContract.Item._ID + "= ?", new String[]{String.valueOf(item.get_id())});
-            database.endTransaction();
+            database.setTransactionSuccessful();
 
         } finally {
-
+            database.endTransaction();
         }
     }
 
