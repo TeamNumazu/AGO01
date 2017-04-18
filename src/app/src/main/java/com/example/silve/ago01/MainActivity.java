@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_export) {
             Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_truncate) {
+            Toast.makeText(this, "まだ未実装です！", Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

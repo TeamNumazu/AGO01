@@ -22,6 +22,10 @@
                 android:id="@+id/nav_export"
                 android:icon="@drawable/ic_call_received_black_24dp"
                 android:title="エクスポート" />
+            <item
+                android:id="@+id/nav_truncate"
+                android:icon="@drawable/ic_delete_forever_black_24dp"
+                android:title="データを初期化" />
         </menu>
     </item>
 
