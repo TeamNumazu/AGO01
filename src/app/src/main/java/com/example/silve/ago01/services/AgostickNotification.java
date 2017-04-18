@@ -54,8 +54,10 @@ public class AgostickNotification {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
         builder.setAutoCancel(true);
+        builder.setTicker(title);
+        builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
-        NotificationCompat.InboxStyle inboxStyle =
+                NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle(builder);
 
         inboxStyle.setBigContentTitle(title);

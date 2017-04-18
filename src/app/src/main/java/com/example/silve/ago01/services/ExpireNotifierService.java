@@ -51,8 +51,6 @@ public class ExpireNotifierService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (this.shouldTaskStart() == true) {
-            Toast.makeText(this, "商品の監視を実行します..", Toast.LENGTH_LONG).show();
-
             Context context = getApplicationContext();
 
             // すべての商品をDBから取得
