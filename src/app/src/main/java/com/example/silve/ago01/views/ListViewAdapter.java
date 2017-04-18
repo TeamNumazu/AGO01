@@ -61,7 +61,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             // 編集おしたとき
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "click edit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "まだ未実装です！", Toast.LENGTH_SHORT).show();
             }
         });
         v.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener() {
