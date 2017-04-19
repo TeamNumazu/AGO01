@@ -47,45 +47,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="item_name"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="23dp"
+                android:layout_marginStart="23dp" />
 
             <TextView
                 android:id="@+id/position_quantity_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="個数: "
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:text="個数: " />
 
             <TextView
                 android:id="@+id/position_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="quantity"
                 android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/position_quantity_title"
                 android:layout_toRightOf="@+id/position_quantity_title"
-                android:layout_toEndOf="@+id/position_quantity_title" />
+                android:text="quantity" />
 
             <TextView
                 android:id="@+id/position_expire_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="期限: "
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@+id/position_expire"
-                android:layout_toStartOf="@+id/position_expire" />
+                android:layout_toStartOf="@+id/position_expire"
+                android:text="期限: " />
 
             <TextView
                 android:id="@+id/position_expire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="expire"
-                android:layout_marginRight="12dp"
-                android:layout_marginEnd="12dp"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="expire" />
+
+            <TextView
+                android:id="@+id/position_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="XX"
+                android:textColor="#9fa8da" />
         </RelativeLayout>
 
     </LinearLayout>

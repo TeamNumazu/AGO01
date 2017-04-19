@@ -94,9 +94,14 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     public void fillValues(int position, View convertView) {
         Item item = mItemList.get(position);
 
+        // インデックス
+        TextView itemIndex = (TextView)convertView.findViewById(R.id.position_index);
+        String index = String.valueOf(position + 1);
+        itemIndex.setText(index);
+
         // 商品名
         TextView name = (TextView)convertView.findViewById(R.id.position_name);
-        name.setText((position + 1) + ". " + item.getItemName());
+        name.setText(item.getItemName());
 
         // 個数
         TextView quantity = (TextView)convertView.findViewById(R.id.position_quantity);
