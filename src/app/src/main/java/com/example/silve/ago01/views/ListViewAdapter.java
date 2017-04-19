@@ -96,7 +96,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
         // 商品名
         TextView name = (TextView)convertView.findViewById(R.id.position_name);
-        name.setText((position + 1) + ". " + item.getItemName() + "    CategoryID = " + this.mCategoryId);
+        name.setText((position + 1) + ". " + item.getItemName());
 
         // 個数
         TextView quantity = (TextView)convertView.findViewById(R.id.position_quantity);
