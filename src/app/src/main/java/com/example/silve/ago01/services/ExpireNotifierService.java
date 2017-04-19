@@ -28,7 +28,7 @@ public class ExpireNotifierService extends Service {
      * <p>
      * 30なら30分毎、最大59まで設定可。
      */
-    private static final int NOTIFIER_EXEC_PER = 1;
+    private static final int NOTIFIER_EXEC_PER = 15;
 
     /**
      * 期限の何日前に通知するか
