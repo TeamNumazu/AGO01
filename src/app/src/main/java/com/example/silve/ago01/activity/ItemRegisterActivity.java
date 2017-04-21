@@ -34,6 +34,7 @@ import com.example.silve.ago01.models.repository.ItemRepository;
 
 import java.io.File;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -97,7 +98,13 @@ public class ItemRegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // 現在時刻
+        final DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        final Date date = new Date(System.currentTimeMillis());
+        String createdAt = df.format(date);
+
         Item item = new Item();
+        item.setCreatedAt(createdAt);
         item.setCategoryId(this.getCategoryId());
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());

@@ -1,7 +1,6 @@
 package com.example.silve.ago01.views;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,12 @@ import com.example.silve.ago01.models.DataBaseHelper;
 import com.example.silve.ago01.models.entity.Item;
 import com.example.silve.ago01.models.repository.ItemRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 public class ListViewAdapter extends BaseSwipeAdapter {
 
@@ -108,8 +112,26 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         quantity.setText(String.valueOf(item.getNumber()));
 
         // 期限
-        TextView expire = (TextView)convertView.findViewById(R.id.position_expire);
+        TextView expire = (TextView) convertView.findViewById(R.id.position_expire);
         expire.setText(item.getExpiredAt());
+
+        // 経過日数
+        TextView openPassed = (TextView) convertView.findViewById(R.id.position_open_passed);
+        int diffDays = -1;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            Date itemCreatedAt = format.parse(item.getCreatedAt());
+            Date now = new Date();
+            long createTime = itemCreatedAt.getTime();
+            long nowTime = now.getTime();
+
+            // 経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て。
+            long diffTime = abs(nowTime - createTime);
+            diffDays = (int) (diffTime / (1000 * 60 * 60 * 24));
+        } catch (ParseException ex) {
+            // ナイスキャッチ！
+        }
+        openPassed.setText(Integer.toString(diffDays));
     }
 
     @Override

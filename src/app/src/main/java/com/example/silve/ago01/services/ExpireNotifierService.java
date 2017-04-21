@@ -110,6 +110,7 @@ public class ExpireNotifierService extends Service {
     }
 
     /**
+     Date now = new Date();
      * 有効期限が近い商品のリストを取得します
      * 期限切れの商品は返却しません
      *
