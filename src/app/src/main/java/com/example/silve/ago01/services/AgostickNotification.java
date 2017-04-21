@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class AgostickNotification {
 
+    private static final String APP_NAME = "AGO01";
+
     private Context mContext;
 
     /**
@@ -69,9 +71,15 @@ public class AgostickNotification {
         NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle(builder);
 
+        // アプリ名セット
+        inboxStyle.setSummaryText(APP_NAME);
+
+        // タイトルセット
         inboxStyle.setBigContentTitle(title);
+
         for (int i = 0, size = list.size(); i < size; i++) {
-            inboxStyle.addLine(list.get(i));
+            String msg = list.get(i);
+            inboxStyle.addLine(msg);
         }
 
         NotificationManager manager =
