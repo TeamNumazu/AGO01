@@ -17,4 +17,18 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AccentButtonStyle" parent="Theme.AppCompat">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#FF9100</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#FF6D00</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Theme.AppCompat.Light">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#FAFAFA</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#FFAB40</item>
+    </style>
+
 </resources>

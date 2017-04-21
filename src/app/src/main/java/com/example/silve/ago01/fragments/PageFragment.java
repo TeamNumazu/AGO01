@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -72,9 +73,9 @@ public class PageFragment extends Fragment {
         final int categoryId = this.getCategoryId();
         this.createListView(view, categoryId);
 
-        // 商品追加フローティングボタン
-        FloatingActionButton floatingButton = (FloatingActionButton) view.findViewById(R.id.fab);
-        floatingButton.setOnClickListener(new View.OnClickListener() {
+        // 商品追加ボタン
+        Button addButton = (Button) view.findViewById(R.id.fab);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mButtonClickListener != null) {
