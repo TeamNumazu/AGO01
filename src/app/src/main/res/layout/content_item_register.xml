@@ -120,7 +120,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:onClick="onClickCancelButton"
-            android:text="キャンセル"
+            android:text="戻る"
             android:theme="@style/NegativeButtonStyle" />
 
     </LinearLayout>
