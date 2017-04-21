@@ -121,6 +121,14 @@ public class ItemRegisterActivity extends AppCompatActivity {
         number.setText("");
     }
 
+    /**
+     * キャンセルボタンをクリックした時
+     *
+     * @param v
+     */
+    public void onClickCancelButton(View v) {
+        finish();
+    }
 
     public void onClickCameraButton(View v) {
         // カメラ起動

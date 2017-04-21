@@ -26,9 +26,9 @@
 
     <style name="NegativeButtonStyle" parent="Theme.AppCompat.Light">
         <!--ボタンの色-->
-        <item name="colorButtonNormal">#FAFAFA</item>
+        <item name="colorButtonNormal">#F4F4F4</item>
         <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
-        <item name="colorControlHighlight">#FFAB40</item>
+        <item name="colorControlHighlight">#EEEEEE</item>
     </style>
 
 </resources>
