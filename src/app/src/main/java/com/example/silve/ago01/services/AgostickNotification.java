@@ -34,7 +34,7 @@ public class AgostickNotification {
      */
     public void doNotice(String message, String title) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this.mContext);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_notifier);
         builder.setTicker("通知概要");
         builder.setContentInfo("情報欄");
         builder.setContentTitle(title);
@@ -60,7 +60,7 @@ public class AgostickNotification {
         // 通知生成
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
 
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_notifier);
         builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
         builder.setAutoCancel(true);
         builder.setTicker(title);
