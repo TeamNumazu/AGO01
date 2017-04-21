@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AgostickNotification {
 
-    private static final String APP_NAME = "AGO01";
+    private static final String APP_NAME = "Opener";
 
     private Context mContext;
 
