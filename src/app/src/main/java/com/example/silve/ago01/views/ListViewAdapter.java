@@ -72,7 +72,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             // 削除おしたとき
             @Override
             public void onClick(View view) {
-
                 for(int i = 0 ; i < mItemList.size() ; i++){
 
                     if(mItemManger.isOpen(i)){
@@ -86,7 +85,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 }
 
                 notifyDataSetChanged();
-                Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "削除しました", Toast.LENGTH_SHORT).show();
             }
 
         });
