@@ -48,7 +48,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public View generateView(int position, ViewGroup parent) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -86,6 +86,9 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
                 notifyDataSetChanged();
                 Toast.makeText(mContext, "削除しました", Toast.LENGTH_SHORT).show();
+
+                // スワイプを閉じる
+                swipeLayout.close(true, true);
             }
 
         });
