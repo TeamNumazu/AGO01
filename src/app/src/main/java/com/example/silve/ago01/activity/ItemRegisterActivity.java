@@ -93,9 +93,6 @@ public class ItemRegisterActivity extends AppCompatActivity {
         } else if (expiredAt.length() < 1) {
             Toast.makeText(context, "期限を入力してください", Toast.LENGTH_SHORT).show();
             return;
-        } else if (number.length() < 1) {
-            Toast.makeText(context, "個数を入力してください", Toast.LENGTH_SHORT).show();
-            return;
         }
 
         // 現在時刻
@@ -108,7 +105,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
         item.setCategoryId(this.getCategoryId());
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());
-        item.setNumber(Long.parseLong(number.getText().toString()));
+        item.setNumber(Long.parseLong("1"));
         item.setItemImage(mImagePath);
 
         DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
