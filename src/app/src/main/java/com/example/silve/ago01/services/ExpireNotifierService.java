@@ -167,7 +167,7 @@ public class ExpireNotifierService extends Service {
      * @param itemList
      */
     private void doBulkNotice(Context context, List<Item> itemList) {
-        // 賞味期限切れの商品名（改行で結合）
+        // 期限切れの商品名（改行で結合）
         List itemNameList = new ArrayList<>();
 
         for (int i = 0, size = itemList.size(); i < size; i++) {
@@ -181,7 +181,7 @@ public class ExpireNotifierService extends Service {
         AgostickNotification notifier = new AgostickNotification(context);
 
         // 通知のタイトル
-        String title = "次の商品の賞味期限が近づいています";
+        String title = "次の商品の期限が近づいています";
 
         // 通知を実行
         notifier.doNotice(itemNameList, title);
