@@ -38,6 +38,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import android.database.Cursor;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,10 +46,10 @@ import android.widget.Toast;
 
 public class ItemRegisterActivity extends AppCompatActivity {
 
-    private String mImagePath = "";
+    private String mImageName = "";
     //カメラようだよーーー
 
-    static protected int REQUEST_CODE_CAMERA  = 0x00000001;
+    static protected int REQUEST_CODE_CAMERA = 0x00000001;
     static protected int REQUEST_CODE_GALLERY = 0x00000002;
     static protected int REQUEST_USE_CAMERA_AND_STORAGE = 0x00000003;
 
@@ -106,7 +107,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
         item.setItemName(itemName.getText().toString());
         item.setExpiredAt(expiredAt.getText().toString());
         item.setNumber(Long.parseLong("1"));
-        item.setItemImage(mImagePath);
+        item.setItemImage(mImageName);
 
         DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
         ItemRepository iRepository = new ItemRepository(dbHelper);
@@ -155,30 +156,31 @@ public class ItemRegisterActivity extends AppCompatActivity {
     /**
      * カメラ起動するもよう
      */
-    protected void wakeupCamera(){
+    protected void wakeupCamera() {
         File mediaStorageDir = null;
 
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             //RUNTIME PERMISSION Android M
-            if(PackageManager.PERMISSION_GRANTED== ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
-                    PackageManager.PERMISSION_GRANTED== ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)){
+            if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                    PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)) {
                 mediaStorageDir = new File(
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"IMG"
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "IMG"
                 );
-            }else{
+            } else {
                 requestCameraPermission(this);
                 return;
             }
 
         }
 
-        if(! mediaStorageDir.exists() & ! mediaStorageDir.mkdirs()) {
+        if (!mediaStorageDir.exists() & !mediaStorageDir.mkdirs()) {
             Log.d("TAG", "Failed to create directory");
             return;
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        File bitmapFile = new File(mediaStorageDir.getPath() + File.separator + timeStamp + ".JPG");
+        mImageName = timeStamp + ".JPG";
+        File bitmapFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
 
         bitmapUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", bitmapFile);
 
@@ -187,21 +189,21 @@ public class ItemRegisterActivity extends AppCompatActivity {
         startActivityForResult(i, REQUEST_CODE_CAMERA);
     }
 
-    private static void requestCameraPermission(final Context context){
-        if(ActivityCompat.shouldShowRequestPermissionRationale((Activity)context,Manifest.permission.WRITE_EXTERNAL_STORAGE)||
-                ActivityCompat.shouldShowRequestPermissionRationale((Activity)context,Manifest.permission.CAMERA)){
+    private static void requestCameraPermission(final Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.CAMERA)) {
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
 
             ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                     REQUEST_USE_CAMERA_AND_STORAGE);
 
-        }else {
+        } else {
             // permission has not been granted yet. Request it directly.
-            ActivityCompat.requestPermissions((Activity)context,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                     REQUEST_USE_CAMERA_AND_STORAGE);
         }
     }
@@ -218,10 +220,10 @@ public class ItemRegisterActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 0x00000003: {
-                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this,
                             "成功やで",
                             Toast.LENGTH_SHORT).show();
@@ -240,15 +242,15 @@ public class ItemRegisterActivity extends AppCompatActivity {
 
 
     //ロストテクノロジー
-    public void onActivityResult( int requestCode, int resultCode, Intent data ) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(RESULT_OK == resultCode){
-            if(null != bitmap){
+        if (RESULT_OK == resultCode) {
+            if (null != bitmap) {
                 bitmap.recycle();
             }
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-            switch(requestCode){
+            switch (requestCode) {
                 case 0x00000001:
                     bitmap = BitmapFactory.decodeFile(bitmapUri.getPath(), options);
 
@@ -256,16 +258,16 @@ public class ItemRegisterActivity extends AppCompatActivity {
                     String[] paths = {bitmapUri.getPath()};
                     String[] mimeTypes = {"image/*"};
                     MediaScannerConnection.scanFile(
-                                getApplicationContext(), paths, mimeTypes, new MediaScannerConnection.OnScanCompletedListener() {
+                            getApplicationContext(), paths, mimeTypes, new MediaScannerConnection.OnScanCompletedListener() {
                                 @Override
                                 public void onScanCompleted(String path, Uri uri) {
                                 }
                             });
                     break;
                 case 0x00000002:
-                    try{
+                    try {
                         ContentResolver cr = getContentResolver();
-                        String[] columns = { MediaStore.Images.Media.DATA };
+                        String[] columns = {MediaStore.Images.Media.DATA};
                         Cursor c = cr.query(data.getData(), columns, null, null, null);
                         c.moveToFirst();
                         bitmapUri = Uri.fromFile(new File(c.getString(0)));
@@ -273,14 +275,13 @@ public class ItemRegisterActivity extends AppCompatActivity {
                         InputStream is = getContentResolver().openInputStream(data.getData());
                         bitmap = BitmapFactory.decodeStream(is, null, options);
                         is.close();
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
             }
             //こいつは受け取った写真のviewになる。
             ImageView itemView = (ImageView) findViewById(R.id.item_view);
-            mImagePath = bitmapUri.getPath();
             itemView.setImageURI(bitmapUri);
 
         }
