@@ -158,7 +158,18 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             Log.d("file open error", e.toString());
         }
 
-        itemView.setImageURI(bitmapUrl);
+        Bitmap resizedBitmap = null;
+
+        try {
+            BitmapFactory.Options imageOptions = new BitmapFactory.Options();
+            imageOptions.inSampleSize = 8;
+            resizedBitmap = BitmapFactory.decodeStream(mContext.getContentResolver().openInputStream(bitmapUrl),null,imageOptions);
+
+        }catch(Exception e){
+            //ナイスキャッチ
+        }
+
+        itemView.setImageBitmap(resizedBitmap);
 
         //開けた日
         TextView openedDayView = (TextView) convertView.findViewById(R.id.opened_at);

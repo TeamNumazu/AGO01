@@ -249,7 +249,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
                 bitmap.recycle();
             }
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
+            options.inSampleSize = 8;
             switch (requestCode) {
                 case 0x00000001:
                     bitmap = BitmapFactory.decodeFile(bitmapUri.getPath(), options);
@@ -257,6 +257,7 @@ public class ItemRegisterActivity extends AppCompatActivity {
                     // 撮影した画像をギャラリーのインデックスに追加されるようにスキャンさせる
                     String[] paths = {bitmapUri.getPath()};
                     String[] mimeTypes = {"image/*"};
+
                     MediaScannerConnection.scanFile(
                             getApplicationContext(), paths, mimeTypes, new MediaScannerConnection.OnScanCompletedListener() {
                                 @Override
