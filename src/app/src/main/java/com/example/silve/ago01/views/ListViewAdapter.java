@@ -126,21 +126,29 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
         // 期限
         TextView expire = (TextView) convertView.findViewById(R.id.position_expire);
-        expire.setText(item.getExpiredAt());
+
+        String remainingExpiredDays = "";
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            Date expiredDate = format.parse(item.getExpiredAt());
+            remainingExpiredDays = calcDaysUntil(expiredDate.getTime());
+
+        } catch (Exception e) {
+            //ナイスキャッチ
+        }
+
+        expire.setText(remainingExpiredDays);
 
         ImageView itemView = (ImageView) convertView.findViewById(R.id.item_row_view);
 
         Uri bitmapUrl = null;
 
         try {
-//            File bitmapFile = new File(item.getItemImage());
-//            bitmapUrl = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".provider", bitmapFile);
             File mediaStorageDir = new File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"IMG"
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "IMG"
             );
 
-            Log.d("gggg" , mediaStorageDir.getPath() + File.separator);
-            Log.d("gggg" , item.getItemImage());
 
             File bitmapFile = new File(mediaStorageDir.getPath() + File.separator + item.getItemImage());
 
@@ -151,24 +159,64 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         }
 
         itemView.setImageURI(bitmapUrl);
+
+        //開けた日
+        TextView openedDayView = (TextView) convertView.findViewById(R.id.opened_at);
+        openedDayView.setText(item.getCreatedAt());
+
         // 経過日数
         TextView openPassed = (TextView) convertView.findViewById(R.id.position_open_passed);
-        int diffDays = -1;
+
+        String pastDays = "";
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
             Date itemCreatedAt = format.parse(item.getCreatedAt());
-            Date now = new Date();
-            long createTime = itemCreatedAt.getTime();
-            long nowTime = now.getTime();
 
-            // 経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て。
-            long diffTime = abs(nowTime - createTime);
-            diffDays = (int) (diffTime / (1000 * 60 * 60 * 24));
+            pastDays = calcPastOpenedDays(itemCreatedAt.getTime());
+
         } catch (ParseException ex) {
             // ナイスキャッチ！
         }
-        openPassed.setText(Integer.toString(diffDays));
+        openPassed.setText(pastDays);
     }
+
+    /**
+     * 登録日から現在までの経過日数を返却する
+     *
+     * @param createTime
+     * @return
+     */
+    protected String calcPastOpenedDays(long createTime) {
+        Date now = new Date();
+        return calcDays(createTime, now.getTime());
+
+    }
+
+    /**
+     * 登録日から現在までの経過日数を返却する
+     *
+     * @param expiredDate
+     * @return
+     */
+    protected String calcDaysUntil(long expiredDate) {
+        Date now = new Date();
+        long nowTime = now.getTime();
+
+        return calcDays(nowTime, expiredDate);
+
+    }
+
+    protected String calcDays(long from, long to) {
+        int diffDays = -1;
+
+        // 経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て。
+        long diffTime = abs(to - from);
+        int dayOfMinSec = 1000 * 60 * 60 * 24;
+        diffDays = (int) (diffTime / dayOfMinSec);
+        return Integer.toString(diffDays);
+
+    }
+
 
     @Override
     public int getCount() {
